@@ -1362,10 +1362,10 @@ async function doReset() {
 }
 
 // ⚠️ GANTI URL INI sesuai environment:
-// Sekarang (GitHub Pages) : 'https://xrezzkystoreidn.github.io/Marketplace_test/'
-// Nanti pindah Vercel     : 'https://namaapp.vercel.app/'
-// Custom domain nanti     : 'https://xrezzky.com/'
-const SITE_URL = 'https://xrezzkystoreidn.github.io/Marketplace_test/';
+// Produksi (custom domain) : 'https://store.xrezzkybeta.my.id/'
+// GitHub Pages (cadangan)  : 'https://xrezzky.github.io/store-marketplace-/'
+// Vercel (cadangan)        : 'https://xrezzky-marketplace.vercel.app/'
+const SITE_URL = 'https://store.xrezzkybeta.my.id/';
 
 async function doGoogleLogin() {
   const { error } = await sb.auth.signInWithOAuth({
