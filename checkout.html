@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -103,7 +104,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(23,28,36,.95);backdrop-fil
 .cp{background:rgba(168,85,247,.12);color:var(--purple);border:1px solid rgba(168,85,247,.25)}
 .cc{background:rgba(6,182,212,.1);color:var(--cyan);border:1px solid rgba(6,182,212,.2)}
 /* Chat */
-.chat-win{display:flex;flex-direction:column;height:350px}
+.chat-win{display:flex;flex-direction:column;height:350px;transition:height .2s ease}
 .chat-msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:var(--bg)}
 .chat-msgs::-webkit-scrollbar{width:3px}
 .cmsg{max-width:78%;word-break:break-word}
@@ -112,10 +113,29 @@ nav{position:sticky;top:0;z-index:200;background:rgba(23,28,36,.95);backdrop-fil
 .cmsg.me{align-self:flex-end}.cmsg.me .cmsg-bubble{background:var(--accent);color:#fff;border-radius:12px 12px 2px 12px}
 .cmsg.them{align-self:flex-start}.cmsg.them .cmsg-bubble{background:var(--surface);border:1px solid var(--border);border-radius:12px 12px 12px 2px}
 .cmsg.sys{align-self:center;max-width:90%;text-align:center}.cmsg.sys .cmsg-bubble{background:rgba(74,125,255,.07);border:1px solid rgba(74,125,255,.15);font-size:11px;color:var(--txt2);border-radius:8px}
-.c-inp{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--border);background:var(--surface);flex-shrink:0}
+.cmsg-img{max-width:220px;max-height:220px;border-radius:8px;display:block;cursor:zoom-in;object-fit:cover}
+.cmsg-vid{max-width:240px;max-height:240px;border-radius:8px;display:block}
+.c-inp{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--border);background:var(--surface);flex-shrink:0;align-items:flex-end}
 .c-inp textarea{flex:1;background:var(--nav);border:1px solid var(--border);border-radius:var(--rsm);padding:8px 11px;color:var(--txt);font-family:'Poppins',sans-serif;font-size:13px;resize:none;outline:none;min-height:36px;max-height:80px;transition:border .18s}
 .c-inp textarea:focus{border-color:var(--accent)}.c-inp textarea:disabled{opacity:.4}
 .send-btn{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;align-self:flex-end;transition:.18s}
+.attach-btn{width:36px;height:36px;border-radius:50%;background:var(--nav);border:1px solid var(--border);color:var(--txt2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;align-self:flex-end;transition:.18s}
+.attach-btn:hover{color:var(--accent);border-color:var(--accent)}
+.attach-btn:disabled{opacity:.4;cursor:not-allowed}
+.media-preview{display:none;align-items:center;gap:8px;padding:8px 12px;background:var(--surface);border-top:1px solid var(--border)}
+.media-preview.show{display:flex}
+.media-preview img,.media-preview video{width:44px;height:44px;object-fit:cover;border-radius:6px}
+.media-preview .mp-info{flex:1;font-size:11px;color:var(--txt2);min-width:0}
+.media-preview .mp-remove{background:none;border:none;color:var(--danger);font-size:14px;cursor:pointer;padding:4px}
+.media-upload-bar{display:none;height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin:0 12px}
+.media-upload-fill{height:100%;background:var(--accent);width:0%;transition:width .15s}
+/* Fullscreen mode toggle */
+.chat-fs-btn{background:none;border:none;color:var(--txt2);font-size:15px;cursor:pointer;padding:2px;flex-shrink:0}
+.chat-fs-btn:hover{color:var(--txt)}
+#mChat.fullscreen{padding:0}
+#mChat.fullscreen .mb{max-width:none!important;width:100vw;height:100dvh;max-height:100dvh;border-radius:0;border:none}
+#mChat.fullscreen .chat-win{flex:1;height:auto;min-height:0}
+#mChat.fullscreen .mh{flex-shrink:0}
 .send-btn:hover{background:var(--ah)}.send-btn:disabled{opacity:.35;cursor:not-allowed}
 .chat-closed{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);padding:8px 14px;font-size:12px;color:var(--danger);text-align:center;display:none}
 /* Store */
@@ -144,7 +164,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(23,28,36,.95);backdrop-fil
 .mh h3{font-size:15px;font-weight:700;font-family:'Syne',sans-serif}
 .mbody{padding:18px;overflow-y:auto}
 .mfoot{padding:12px 18px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
-.mc-x{background:none;border:none;color:var(--txt2);font-size:18px;cursor:pointer;line-height:1}
+.mc-x{background:none;border:none;color:var(--txt2);font-size:18px;cursor:pointer;line-height:1;min-width:28px;min-height:28px;display:inline-flex;align-items:center;justify-content:center;padding:4px}
 /* PIN */
 .pin-row{display:flex;gap:8px;justify-content:center;margin:14px 0}
 .pin-d{width:44px;height:52px;background:var(--surface);border:2px solid var(--border);border-radius:var(--rsm);color:var(--txt);font-size:20px;font-weight:700;text-align:center;outline:none;transition:border .18s}
@@ -324,13 +344,23 @@ nav{position:sticky;top:0;z-index:200;background:rgba(23,28,36,.95);backdrop-fil
       <h3 id="chatTit"><i class="fas fa-comments" style="color:var(--accent);margin-right:7px"></i>Obrolan</h3>
       <div style="display:flex;align-items:center;gap:8px">
         <span class="chip cy" id="chatSt" style="font-size:10px">Aktif</span>
-        <button class="mc-x" onclick="closeMo('mChat')"><i class="fas fa-times"></i></button>
+        <button class="chat-fs-btn" id="chatFsBtn" onclick="toggleChatFullscreen()" title="Perbesar layar penuh"><i class="fas fa-expand"></i></button>
+        <button class="mc-x" onclick="closeChat()" title="Tutup obrolan"><i class="fas fa-times"></i></button>
       </div>
     </div>
     <div class="chat-win">
       <div class="chat-msgs" id="chatMsgs"></div>
       <div class="chat-closed" id="chatClosed"><i class="fas fa-lock" style="margin-right:6px"></i>Obrolan ditutup — transaksi selesai</div>
+      <div class="media-upload-bar" id="chatUpBar"><div class="media-upload-fill" id="chatUpFill"></div></div>
+      <div class="media-preview" id="chatMediaPreview">
+        <img id="chatMediaThumb" style="display:none"/>
+        <video id="chatMediaThumbVid" style="display:none" muted></video>
+        <div class="mp-info" id="chatMediaInfo">—</div>
+        <button class="mp-remove" onclick="removeChatMedia()" title="Batal kirim gambar"><i class="fas fa-trash"></i></button>
+      </div>
       <div class="c-inp" id="cInpW">
+        <input type="file" id="chatFileInp" accept="image/*,video/*" style="display:none" onchange="onChatFileSelected(this)"/>
+        <button class="attach-btn" id="chatAttachBtn" onclick="document.getElementById('chatFileInp').click()" title="Kirim gambar"><i class="fas fa-paperclip"></i></button>
         <textarea id="chatTxt" placeholder="Tulis pesan..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg()}" oninput="aH(this)"></textarea>
         <button class="send-btn" id="sendBtn" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
       </div>
@@ -350,6 +380,10 @@ nav{position:sticky;top:0;z-index:200;background:rgba(23,28,36,.95);backdrop-fil
 const SUPA_URL='https://pvkhsjiftfzjpgkoiawq.supabase.co';
 const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB2a2hzamlmdGZ6anBna29pYXdxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5NzMwMjQsImV4cCI6MjA5NzU0OTAyNH0.Fo82CROzoQE90ckYYv7rlnDkLxP0JZ2tN-T2hgnk-fA';
 const CLD='https://res.cloudinary.com/drjmclzbi/image/upload/';
+const CLD_CLOUD='drjmclzbi';
+const CLD_PRESET='xrezzky_unsigned';
+const CLD_UPLOAD=`https://api.cloudinary.com/v1_1/${CLD_CLOUD}/image/upload`;
+let pendingChatMedia=null;
 const SVC=500,MCF=2000,MC_LIMIT=20;
 if(typeof supabase==='undefined')throw new Error('Supabase CDN not loaded');
 const sb=supabase.createClient(SUPA_URL,SUPA_KEY);
@@ -661,6 +695,18 @@ function buildMsg(m){
   const time=m.created_at?new Date(m.created_at).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}):'';
   const txt=esc(m.message||'').replace(/\n/g,'<br/>');
   if(isSys)return'<div class="cmsg sys"><div class="cmsg-bubble">'+txt+'</div></div>';
+  if(m.attachment){
+    const url=m.attachment.startsWith('http')?m.attachment:CLD+m.attachment;
+    const isVid=/\.(mp4|mov|webm|avi)$/i.test(m.attachment);
+    const med=isVid
+      ?'<video class="cmsg-vid" controls src="'+url+'"></video>'
+      :'<img class="cmsg-img" src="'+url+'" onclick="openChatLB(\''+url+'\')" loading="lazy"/>';
+    return'<div class="cmsg '+(isMe?'me':'them')+'">'
+      +(!isMe?'<div style="font-size:10px;color:var(--txt2);margin-bottom:2px;padding:0 4px;font-weight:600">'+esc(nm)+'</div>':'')
+      +'<div class="cmsg-bubble" style="padding:6px">'+med
+      +(m.message?'<div style="margin-top:6px;font-size:13px">'+txt+'</div>':'')
+      +'</div><div class="cmsg-time">'+time+'</div></div>';
+  }
   return'<div class="cmsg '+(isMe?'me':'them')+'">'
     +(!isMe?'<div style="font-size:10px;color:var(--txt2);margin-bottom:2px;padding:0 4px;font-weight:600">'+esc(nm)+'</div>':'')
     +'<div class="cmsg-bubble">'+txt+'</div>'
@@ -668,9 +714,103 @@ function buildMsg(m){
     +'</div>';
 }
 async function sendMsg(){
-  const txt=document.getElementById('chatTxt').value.trim();if(!txt||!activeChatId)return;
-  document.getElementById('chatTxt').value='';document.getElementById('chatTxt').style.height='auto';
-  await sb.from('chat_messages').insert([{session_id:activeChatId,sender_id:user.id,sender_type:'user',message:txt,created_at:new Date().toISOString()}]);
+  const txtEl=document.getElementById('chatTxt');
+  const txt=txtEl.value.trim();
+  if((!txt&&!pendingChatMedia)||!activeChatId)return;
+  const sendBtn=document.getElementById('sendBtn');
+  sendBtn.disabled=true;
+  try{
+    let att=null;
+    if(pendingChatMedia){
+      att=await uploadChatMedia(pendingChatMedia);
+      if(!att){sendBtn.disabled=false;return;} // upload gagal, jangan kirim pesan kosong
+    }
+    txtEl.value='';txtEl.style.height='auto';
+    removeChatMedia();
+    await sb.from('chat_messages').insert([{session_id:activeChatId,sender_id:user.id,sender_type:'user',message:txt||'',attachment:att||null,created_at:new Date().toISOString()}]);
+  }finally{
+    sendBtn.disabled=false;
+  }
+}
+
+// ── Kirim gambar/video di chat ──
+function onChatFileSelected(inp){
+  const file=inp.files?.[0];
+  if(!file)return;
+  if(file.size>15*1024*1024){toast('Ukuran file maksimal 15MB','w');inp.value='';return;}
+  pendingChatMedia=file;
+  const isVid=file.type.startsWith('video/');
+  const prevImg=document.getElementById('chatMediaThumb');
+  const prevVid=document.getElementById('chatMediaThumbVid');
+  const url=URL.createObjectURL(file);
+  if(isVid){
+    prevVid.src=url;prevVid.style.display='block';prevImg.style.display='none';
+  }else{
+    prevImg.src=url;prevImg.style.display='block';prevVid.style.display='none';
+  }
+  document.getElementById('chatMediaInfo').textContent=file.name+' · '+fmtBytesChat(file.size);
+  document.getElementById('chatMediaPreview').classList.add('show');
+  inp.value='';
+}
+function removeChatMedia(){
+  pendingChatMedia=null;
+  document.getElementById('chatMediaPreview').classList.remove('show');
+  document.getElementById('chatMediaThumb').style.display='none';
+  document.getElementById('chatMediaThumbVid').style.display='none';
+}
+function fmtBytesChat(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(1)+' MB';}
+async function uploadChatMedia(file){
+  const bar=document.getElementById('chatUpBar');
+  const fill=document.getElementById('chatUpFill');
+  bar.style.display='block';fill.style.width='0%';
+  try{
+    const folder=file.type.startsWith('video/')?'chat_videos':'chat_images';
+    const fd=new FormData();fd.append('file',file);fd.append('upload_preset',CLD_PRESET);fd.append('folder',folder);
+    return await new Promise((res,rej)=>{
+      const xhr=new XMLHttpRequest();xhr.open('POST',CLD_UPLOAD);
+      xhr.upload.onprogress=e=>{if(e.lengthComputable){const p=Math.round(e.loaded/e.total*90);fill.style.width=p+'%';}};
+      xhr.onload=()=>{
+        fill.style.width='100%';
+        try{
+          const data=JSON.parse(xhr.responseText);
+          if(data.error){rej(new Error(data.error.message));return;}
+          const url=file.type.startsWith('video/')?data.secure_url:data.public_id+'.'+data.format;
+          setTimeout(()=>{bar.style.display='none';},500);
+          res(url);
+        }catch(e){rej(e);}
+      };
+      xhr.onerror=()=>rej(new Error('Upload gagal'));xhr.send(fd);
+    });
+  }catch(e){toast('Upload gagal: '+e.message,'e');bar.style.display='none';return null;}
+}
+
+// ── Lightbox untuk lihat gambar full ──
+function openChatLB(url){
+  const lb=document.createElement('div');
+  lb.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;cursor:zoom-out';
+  lb.onclick=()=>lb.remove();
+  lb.innerHTML='<img src="'+url+'" style="max-width:95vw;max-height:95vh;object-fit:contain;border-radius:8px"/>';
+  document.body.appendChild(lb);
+}
+
+// ── Full-screen toggle ──
+function toggleChatFullscreen(){
+  const modal=document.getElementById('mChat');
+  const btn=document.getElementById('chatFsBtn');
+  const isFs=modal.classList.toggle('fullscreen');
+  btn.innerHTML=isFs?'<i class="fas fa-compress"></i>':'<i class="fas fa-expand"></i>';
+  btn.title=isFs?'Perkecil layar':'Perbesar layar penuh';
+  scrollChat();
+}
+
+// ── Tutup chat (bersihkan realtime subscription + reset state) ──
+function closeChat(){
+  if(chatSub){sb.removeChannel(chatSub);chatSub=null;}
+  document.getElementById('mChat').classList.remove('fullscreen');
+  const fsBtn=document.getElementById('chatFsBtn');
+  if(fsBtn)fsBtn.innerHTML='<i class="fas fa-expand"></i>';
+  removeChatMedia();
+  closeMo('mChat');
 }
 function subChat(){
   if(chatSub)sb.removeChannel(chatSub);
@@ -763,4 +903,4 @@ async function generateOrderId(){
 </script>
   <script src="assets/js/shell.js"></script>
 </body>
-            </html>
+  </html>
